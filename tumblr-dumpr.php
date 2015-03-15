@@ -69,9 +69,10 @@ while($num_posts_seen < $limit) {
 
 	if($obj->response->total_posts < $limit) {
 		$limit = $obj->response->total_posts;
+		$remaining = $limit - $num_posts_seen;
 	}
 
-	echo "{$remaining} posts left.\n";
+	echo "{$remaining} posts left...\n";
 
 	foreach($obj->response->posts as $post) {
 		$num_posts_seen++;
