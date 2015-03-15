@@ -78,7 +78,9 @@ while($num_posts_seen < $limit) {
 		$num_posts_seen++;
 		foreach($post->photos as $photo) {
 			$src = $photo->alt_sizes[0]->url;
-			file_put_contents("$blog/" . basename($src), file_get_contents($src));
+			if(!is_file("$blog/" . basename($src))) {
+				file_put_contents("$blog/" . basename($src), file_get_contents($src));
+			}
 			$imgs[] = $src;
 			usleep(100000);
 		}
