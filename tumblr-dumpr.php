@@ -32,6 +32,8 @@ if(!$consumer_key && isset($argv[3])) {
 	$consumer_key = $argv[3];
 } elseif(!$consumer_key && isset($argv[2]) && strlen($argv[2]) > 20) {
 	$consumer_key = $argv[2];
+} elseif($consumer_key && isset($argv[2])) {
+	$limit = $argv[2];
 }
 
 // Verify keys are set
@@ -79,7 +81,10 @@ while($num_posts_seen < $limit) {
 		foreach($post->photos as $photo) {
 			$src = $photo->alt_sizes[0]->url;
 			if(!is_file("$blog/" . basename($src))) {
-				file_put_contents("$blog/" . basename($src), file_get_contents($src));
+				$img = @file_get_contents($src);
+				if($img) {
+					file_put_contents("$blog/" . basename($src), $img);
+				}
 			}
 			$imgs[] = $src;
 			usleep(100000);
